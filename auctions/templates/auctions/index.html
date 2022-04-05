@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="listings-container d-flex flex-column align-items-center w-100">
+    {% block h2 %}<h2>Active Listings</h2>{% endblock %}
+    <div class="listings-center mt-2 mb-4">
+    {% for auct_list in auct_lists %}
+        <div class="listings d-flex align-items-center justify-content-center border mt-4">
+            <div class="listings-image d-flex justify-content-end align-items-center border-right">
+                <img class="w-100 h-100 p-3" src="{{ auct_list.image_url }}">
+            </div>
+            <div class="listings-text p-4">
+                <h4 class="pb-2"><a href="{% url 'auct_list' auct_list.id %}">{{ auct_list.title }}</a></h4>
+                <p><strong>Description:</strong> {{ auct_list.description }}</p>
+                <p><strong>Price:</strong> {{ auct_list.start_bid }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<div class="category-container d-flex justify-content-center">
+	<div class="category-center d-flex flex-column w-50 justify-content-center align-items-center">
+		<h2>Categories</h2>
+		<div class="category-options h-100 w-100 mt-3">
+			<form method="POST" class="grid-container h-100 w-100">
+			{% csrf_token %}
+				<div class="category-option h-100 w-100">
+					<button name="category" type="submit" class="btn-category mb-0 m-2" value="All">All</button>
+				</div>
+				<div class="category-option h-100 w-100">
+					<button name="category" type="submit" class="btn-category mb-0 m-2" value="Home">Home</button>
+				</div>
+				<div class="category-option h-100 w-100">
+					<button name="category" type="submit" class="btn-category mb-0 m-2" value="Eletronics">Eletronics</button>
+				</div>
+				<div class="category-option h-100 w-100">
+					<button name="category" type="submit" class="btn-category mb-0 m-2" value="Fashion">Fashion</button>
+				</div>
+				<div class="category-option h-100 w-100">
+					<button name="category" type="submit" class="btn-category mb-0 m-2" value="Toys">Toys</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<div class="watchlist-container d-flex flex-column align-items-center">
+	<h2>Watchlist</h2>
+	<div class="watchlist-center mt-2 mb-4">
+	    {% for auct_list in auct_lists %}
+	        <div class="watchlist d-flex align-items-center justify-content-center border mt-4">
+	            <div class="watchlist-image d-flex justify-content-end align-items-center border-right">
+	                <img class="w-100 h-100 p-3" src="{{ auct_list.image_url }}">
+	            </div>
+	            <div class="watchlist-text p-4">
+	                <h4 class="pb-2"><a href="{% url 'auct_list' auct_list.id %}">{{ auct_list.title }}</a></h4>
+	                <p><strong>Description:</strong> {{ auct_list.description }}</p>
+	                <p><strong>Price:</strong> {{ auct_list.start_bid }}</p>
+	            </div>
+	        </div>
+	    {% endfor %}
+	</div>
+</div>
+
+{% endblock %}

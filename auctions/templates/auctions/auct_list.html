@@ -1,0 +1,131 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<div class="auct-list-container d-flex justify-content-center">
+	<div class="auct-list-center border d-flex flex-column mt-4">
+		<div class="auct-list d-flex">
+		    <div class="auct-list-image d-flex justify-content-end align-items-center border-right">
+		        <img class="w-100 h-100 p-3" src="{{ auct_list.image_url }}">
+		    </div>
+		    <div class="auct-list-text p-5">
+		        <h4>{{ auct_list.title }}</h4>
+		        <p class="mt-3"><strong>Start Bid:</strong> {{ auct_list.start_bid }}</p>
+		        <p><strong>Current Price: </strong> {{ current_bid_obj.bid_price }}</p>
+		        {% if status.bids_count and auct_list.active %}
+					{% if request.user.is_authenticated and current_bid_obj != None %}
+				        {% if current_bid_obj.user.username == request.user.username %}
+				        	<p>{{ status.bids_count }} bid(s) so far. Your bid is the current bid.</p>
+				        {% else %}
+				        	<p><strong>Current User bid:</strong> {{ current_bid_obj.user }} - {{ status.bids_count }} bid(s) so far.</p>
+				        {% endif %}
+				    {% else %}
+				        <p>{{ status.bids_count }} bid(s) so far.</p>
+				    {% endif %}
+			    {% endif %}
+		        {% if bid_form and request.user.is_authenticated %}
+		        	{% if auct_list.active and author != request.user.username %}
+			        <form method="POST" action="{% url 'bid' auct_list.id %}">
+			        	{% csrf_token %}
+			        	<div class="form-group">
+			        		{{ bid_form }}
+			        	</div>
+			        	{% if messages %}
+				        	{% for message in messages %}
+					        	<div class="messages mt-3 alert-danger">
+							    	<p class="message-error pt-2 pb-2 pl-3">{{ message }}</p>
+								</div>
+					        {% endfor %}
+			        	{% endif%}
+			        	<input type="submit" value="Place Bid" class="btn btn-primary">
+			        </form>
+			        {% endif%}
+			    {% else %}
+					<div class="messages mt-3 alert-danger">
+					    <p class="message-error pt-2 pb-2 pl-3">Please log-in to place a bid.</p>
+					</div>
+				{% endif%}
+
+
+			    {% if auct_list.category %}
+		        	<p class="mt-3"> <strong>Category:</strong> {{ auct_list.category }}</p>
+		        {% else %}
+		        	<p class="mt-3"> <strong>Category:</strong> None</p>
+		        {% endif %}
+		        {% if status.auct_status == False %}
+		        	<p><strong>Status:</strong> Closed</p>
+		        	{% if status.winner_name == request.user.username %}
+		        		<p><strong>You won this auction!!</strong></p>
+		        	{% else %}
+		        		<p><strong>Winner:</strong> {{ status.winner_name }}</p>
+		        	{% endif %}
+		        {% else %}
+		        	<p><strong>Status:</strong> On going </p>
+		        {% endif %}
+		        {% if auct_list.active and request.user.is_authenticated %}
+		        	{% if request.user.is_authenticated %}
+		        		{% if watchlist %}
+			        	<form method="POST">
+			        		{% csrf_token %}
+			        		<button name="watchlist" value="0" type="submit" class="w-50 btn btn-danger mb-3">REMOVE FROM WATCHLIST</button>
+			        	</form>
+			        	{% else %}
+			        	<form method="POST">
+			        		{% csrf_token %}
+			        		<button name="watchlist" value="1" type="submit" class="w-50 btn btn-success mb-3">ADD TO WATCHLIST</button>
+			        	</form>
+			        	{% endif %}
+			        {% else %}
+						<div class="messages mt-3 alert-danger">
+						    <p class="message-error pt-2 pb-2 pl-3">Please log-in to add this auction to your watchlist.</p>
+						</div>
+					{% endif %}
+		        {% endif %}
+		        {% if author == request.user.username %}
+		        	<p><strong>Created by:</strong> you.</p>
+		        	{% if status.auct_status == True %}
+			        	<form method="POST" action="{% url 'finish' auct_list.id %}">
+			        		{% csrf_token %}
+			        		<button type="submit" class="btn btn-primary">Finish</button>
+			        	</form>
+		        	{% endif %}
+		        {% else %}
+		        	<p><strong>Created by:</strong> {{ author }}</p>
+		        {% endif %}
+		    </div>
+		</div>
+		<div class="bottom-container pl-5 pr-5 border-top">
+			<div class="description-container pt-4 w-100">
+				<p> <strong>Description:</strong> {{ auct_list.description }}</p>
+			</div>
+			<div class="comments-container pt-2">
+				<h3 class="pb-4">Create Comment</h3>
+				<form method="POST">
+				{% if comment_form and request.user.is_authenticated %}
+						{% csrf_token %}
+						<div class="form-group">
+			        		{{comment_form}}
+			        	</div>
+						<button type="submit" class="btn btn-primary">Comment</button>
+					
+				{% else %}
+					<div class="messages mt-3 alert-danger">
+					    <p class="message-error pt-2 pb-2 pl-3">Please log-in to place a comment.</p>
+					</div>
+				{% endif %}
+				</form>
+				
+				<div class="last-comments pt-4">
+					<h3 class="comment-title pb-3">Last Comments</h3>
+					{% if comments %}
+						{% for comment in comments reversed %}
+						<div class="comments alert alert-secondary">
+							<p>{{comment.user}}: {{comment.comment}}</p>
+						</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

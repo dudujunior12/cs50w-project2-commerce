@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+button{
+    border: none;
+    text-decoration: none;
+    background: white;
+    outline: none;
+}
+
+button:hover{
+    outline: none;
+}
+
+/* Login and Register Page */
+
+.account-center{
+    width: 40%;
+}
+
+/* Index Auction Listings */
+
+.listings-center{
+    height: 300px;
+    width: 98%;
+}
+
+.listings{
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.listings-image{
+    height: 100%;
+    width: 20%;
+}
+
+.listings-text{
+    width: 80%;
+}
+
+/* Create List */
+
+.create-center{
+    width: 50%;
+}
+
+/* Single Auction List Page */
+
+.auct-list-center{
+    width: 75%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.auct-list{
+    width: 100%;
+    height: 600px;
+}
+
+.auct-list-image{
+    width: 50%;
+}
+
+.auct-list-text{
+    width: 50%;
+}
+
+.description-container{
+    width: 50%;
+}
+
+.comments-container{
+    width: 100%;
+}
+
+/* Category */
+
+.btn-category:hover{
+    color: blue;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 70% 70% 70%;
+    grid-gap: 3px;
+}
+
+.category-option{
+    border: 1px solid #DEE2E6;
+}
+
+/* Watchlist */
+.watchlist-center{
+    height: 300px;
+    width: 98%;
+}
+
+.watchlist{
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.watchlist-image{
+    height: 100%;
+    width: 20%;
+}
+
+.watchlist-text{
+    width: 80%;
+}
